@@ -26,14 +26,14 @@ class Solution {
             prev=slow;
             slow=next;
         }
-        ListNode first=head;
-        ListNode second=prev;
-        while(second!=null){
-            if(first.val!=second.val){
+        ListNode left=head;
+        ListNode right=prev;
+        while(right!=null){
+            if(left.val!=right.val){
                 return false;
             }
-            first=first.next;
-            second=second.next;
+            left=left.next;
+            right=right.next;
         }
         return true;
 
