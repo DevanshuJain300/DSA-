@@ -9,7 +9,9 @@ class Solution {
 } else {
     count[i] = 1;
 }
-        if (count[i] == k) i = i - k;
+        if (count[i] == k){
+             i = i - k;
+             }
     }
     return new String(st, 0, i);
     }
