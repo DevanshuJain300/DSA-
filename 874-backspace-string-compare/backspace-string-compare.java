@@ -1,27 +1,16 @@
 class Solution {
-
-    private String build(String str) {
-        Stack<Character> st = new Stack<>();
-
-        for (char ch : str.toCharArray()) {
-
-            if (ch != '#') {
-                st.push(ch);
-            } else if (!st.isEmpty()) {
-                st.pop();
+    public boolean backspaceCompare(String s, String t) {
+        return build(s).equals((build(t)));
+    }
+    private String build(String str){
+        StringBuilder sb = new StringBuilder();
+        for(char ch:str.toCharArray()){
+            if(ch!='#'){
+                sb.append(ch);
+            } else if(sb.length()>0){
+                sb.deleteCharAt(sb.length()-1);
             }
         }
-
-        StringBuilder sb = new StringBuilder();
-
-        for (char ch : st) {
-            sb.append(ch);
-        }
-
         return sb.toString();
-    }
-
-    public boolean backspaceCompare(String s, String t) {
-        return build(s).equals(build(t));
     }
 }
