@@ -1,7 +1,7 @@
 class Solution {
     public int[] intersect(int[] nums1, int[] nums2) {
         Arrays.sort(nums1);
-        Arrays.sort(nums2);
+        Arrays.sort(nums2);                                        // can be done using 1 map and 1 list
         int i=0,j=0;
         List<Integer>ans=new ArrayList<>();
         while(i<nums1.length && j<nums2.length){
