@@ -1,21 +1,23 @@
 class Solution {
     public int numSubarrayProductLessThanK(int[] nums, int k) {
-        if (k <= 1) return 0;
+        
+        int n=nums.length;
+        int ans=0;
 
-        int left = 0;
-        int product = 1;
-        int ans = 0;
+        for(int i=0;i<n;i++){
+            int product=1;
 
-        for (int right = 0; right < nums.length; right++) {
-            product *= nums[right];
+            for(int j=i;j<n;j++){
+                product= product * nums[j];
 
-            while (product >= k) {
-                product /= nums[left++];
+                if(product<k){
+                    ans++;
+                }
+                else{
+                    break;
+                }
             }
-
-            ans += (right - left + 1);
         }
-
         return ans;
     }
 }
