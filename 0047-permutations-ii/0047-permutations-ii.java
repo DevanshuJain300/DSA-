@@ -4,44 +4,47 @@ class Solution {
 
     public List<List<Integer>> permuteUnique(int[] nums) {
 
-        Arrays.sort(nums);
-
-        boolean[] used = new boolean[nums.length];
-
-        backtrack(nums, used, new ArrayList<>());
+        backtrack(nums, 0);
 
         return ans;
     }
 
-    public void backtrack(int[] nums, boolean[] used,
-                           List<Integer> subList) {
+    public void backtrack(int[] nums, int index) {
 
-        if (subList.size() == nums.length) {
-            ans.add(new ArrayList<>(subList));
+        if (index == nums.length) {
+            List<Integer> temp = new ArrayList<>();
+
+            for (int num : nums) {
+                temp.add(num);
+            }
+
+            ans.add(temp);
             return;
         }
 
-        for (int i = 0; i < nums.length; i++) {
+        HashSet<Integer> set = new HashSet<>();
 
-            // Already used
-            if (used[i]) {
+        for (int i = index; i < nums.length; i++) {
+
+            // Don't use the same value twice at this level
+            if (set.contains(nums[i])) {
                 continue;
             }
 
-            // Skip duplicate at the same level
-            if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) {
-                continue;
-            }
+            set.add(nums[i]);
 
-            // pick
-            subList.add(nums[i]);
-            used[i] = true;
+            // swap
+            int temp = nums[index];
+            nums[index] = nums[i];
+            nums[i] = temp;
 
-            backtrack(nums, used, subList);
+            // recursion
+            backtrack(nums, index + 1);
 
-            // remove last
-            subList.remove(subList.size() - 1);
-            used[i] = false;
+            // undo swap
+            temp = nums[index];
+            nums[index] = nums[i];
+            nums[i] = temp;
         }
     }
 }
