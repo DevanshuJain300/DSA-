@@ -4,22 +4,23 @@ class Solution {
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
 
-        backtrack(candidates, target, 0, new ArrayList<>());
+        backtrack(candidates, target, 0, 0, new ArrayList<>());
 
         return ans;
     }
 
     public void backtrack(int[] candidates, int target,
-                           int index, List<Integer> subList) {
+                          int index, int sum,
+                          List<Integer> subList) {
 
-        // Target reached
-        if (target == 0) {
+        // target reached
+        if (sum == target) {
             ans.add(new ArrayList<>(subList));
             return;
         }
 
-        // Target exceeded
-        if (target < 0) {
+        // sum exceeded
+        if (sum > target) {
             return;
         }
 
@@ -27,13 +28,14 @@ class Solution {
 
             // pick
             subList.add(candidates[i]);
+            sum += candidates[i];
 
             // recursion
-            backtrack(candidates, target - candidates[i],
-                      i, subList);
+            backtrack(candidates, target, i, sum, subList);
 
-            // remove last
+            // remove
             subList.remove(subList.size() - 1);
+            sum -= candidates[i];
         }
     }
 }
