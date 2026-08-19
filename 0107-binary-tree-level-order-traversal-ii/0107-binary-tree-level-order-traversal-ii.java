@@ -37,7 +37,7 @@ class Solution {
                 }
                 lvlSize--;
             }
-            res.addFirst(subList);
+            res.addFirst(subList);  //only change
 
 
         }
