@@ -9,25 +9,25 @@ class Solution {
         return check(root.left, root.right);
     }
 
-    public boolean check(TreeNode left, TreeNode right) {
+    public boolean check(TreeNode p, TreeNode q) {
 
         // Both are null
-        if (left == null && right == null) {
+        if (p == null && q == null) {
             return true;
         }
 
         // One is null
-        if (left == null || right == null) {
+        if (p == null || q == null) {
             return false;
         }
 
         // Values are different
-        if (left.val != right.val) {
+        if (p.val != q.val) {
             return false;
         }
 
         // Compare mirror positions
-        return check(left.left, right.right) &&
-               check(left.right, right.left);
+        return check(p.left, q.right) &&
+               check(p.right, q.left);
     }
 }
