@@ -1,46 +1,49 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
+
     public TreeNode deleteNode(TreeNode root, int key) {
-        if(root==null){
+
+        // Key not found
+        if (root == null) {
             return null;
         }
-        if(key < root.val){
-            root.left=deleteNode(root.left,key);
+
+        // Search in left subtree
+        if (key < root.val) {
+            root.left = deleteNode(root.left, key);
         }
-        else if(key > root.val){
-            root.right=deleteNode(root.right,key);
+
+        // Search in right subtree
+        else if (key > root.val) {
+            root.right = deleteNode(root.right, key);
         }
-        else{
-            if(root.left==null){
+
+        // Found the node
+        else {
+
+            // Case 1: No left child
+            if (root.left == null) {
                 return root.right;
             }
-            if(root.right==null){
+
+            // Case 2: No right child
+            if (root.right == null) {
                 return root.left;
             }
 
-            TreeNode temp=root.right;
+            // Case 3: Both children exist
+            TreeNode temp = root.right;
 
-            while(temp.left!=null){
-                temp=temp.left;
+            while (temp.left != null) {
+                temp = temp.left;
             }
-            root.val=temp.val;
 
-            root.right=deleteNode(root.right,temp.val);
+            // Replace current value with successor
+            root.val = temp.val;
+
+            // Delete successor
+            root.right = deleteNode(root.right, temp.val);
         }
+
         return root;
     }
 }
