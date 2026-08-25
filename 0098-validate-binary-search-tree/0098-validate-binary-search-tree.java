@@ -13,8 +13,9 @@ class Solution {
         if (root.val <= min || root.val >= max) {
             return false;
         }
-
+        else{
         return check(root.left, min, root.val) &&
                check(root.right, root.val, max);
+        }
     }
 }
