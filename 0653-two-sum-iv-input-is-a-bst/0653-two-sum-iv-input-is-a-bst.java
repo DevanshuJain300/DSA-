@@ -1,42 +1,20 @@
 class Solution {
 
-    ArrayList<Integer> arr = new ArrayList<>();
+    HashSet<Integer> set = new HashSet<>();
 
     public boolean findTarget(TreeNode root, int k) {
 
-        inorder(root);
-
-        int left = 0;
-        int right = arr.size() - 1;
-
-        while (left < right) {
-
-            int sum = arr.get(left) + arr.get(right);
-
-            if (sum == k) {
-                return true;
-            }
-
-            if (sum < k) {
-                left++;
-            } else {
-                right--;
-            }
-        }
-
-        return false;
-    }
-
-    public void inorder(TreeNode root) {
-
         if (root == null) {
-            return;
+            return false;
         }
 
-        inorder(root.left);
+        if (set.contains(k - root.val)) {
+            return true;
+        }
 
-        arr.add(root.val);
+        set.add(root.val);
 
-        inorder(root.right);
+        return findTarget(root.left, k) ||
+               findTarget(root.right, k);
     }
 }
