@@ -37,10 +37,10 @@ class Solution {
 
         if (prev != null && prev.val > root.val) {
 
-            if (first == null)
-                first = prev;
+            if (first == null){
+                first = prev;}
 
-            second = root;
+           second = root;
         }
 
         prev = root;
