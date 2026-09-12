@@ -1,21 +1,36 @@
 class Solution {
-    HashMap<Integer,Integer>dp = new HashMap<>();
+
+    HashMap<Integer, Integer> dp = new HashMap<>();
+
     public int rob(int[] nums) {
-        return check(nums,0);
+
+        return solve(nums, 0);
     }
-    
-    public int check(int[] nums, int i){
-        if(i>=nums.length){
+
+    public int solve(int[] nums, int i) {
+
+        // No houses left
+        if (i >= nums.length) {
             return 0;
         }
-        if(dp.containsKey(i)){
+
+        // Already calculated
+        if (dp.containsKey(i)) {
             return dp.get(i);
         }
-        int rob = nums[i]+ check(nums,i+2);
-        int skip = check(nums,i+1);
 
-        int ans=Math.max(rob,skip);
-        dp.put(i,ans);
+        // Option 1: Rob current house
+        int rob = nums[i] + solve(nums, i + 2);
+
+        // Option 2: Skip current house
+        int skip = solve(nums, i + 1);
+
+        // Take the better choice
+        int ans = Math.max(rob, skip);
+
+        // Store answer
+        dp.put(i, ans);
+
         return ans;
     }
 }
