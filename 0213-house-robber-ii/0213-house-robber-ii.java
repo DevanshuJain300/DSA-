@@ -8,39 +8,42 @@ class Solution {
             return nums[0];
         }
 
-        // Case 1: Don't rob the last house
-        int case1 = solve(nums, 0, n - 2, new HashMap<>());
+        // Case 1: First house included, last excluded
+        int case1 = solve(nums, 0, n - 2);
 
-        // Case 2: Don't rob the first house
-        int case2 = solve(nums, 1, n - 1, new HashMap<>());
+        // Case 2: First house excluded, last included
+        int case2 = solve(nums, 1, n - 1);
 
         return Math.max(case1, case2);
     }
 
-    public int solve(int[] nums, int start, int end,
-                     HashMap<Integer, Integer> dp) {
+    public int solve(int[] nums, int start, int end) {
 
-        // No house left
-        if (start > end) {
+        int[] dp = new int[nums.length];
+
+        Arrays.fill(dp, -1);
+
+        return helper(nums, start, end, dp);
+    }
+
+    public int helper(int[] nums, int i, int end, int[] dp) {
+
+        if (i > end) {
             return 0;
         }
 
-        // Already calculated
-        if (dp.containsKey(start)) {
-            return dp.get(start);
+        if (dp[i] != -1) {
+            return dp[i];
         }
 
         // Rob current house
-        int rob = nums[start] + solve(nums, start + 2, end, dp);
+        int rob = nums[i] + helper(nums, i + 2, end, dp);
 
         // Skip current house
-        int skip = solve(nums, start + 1, end, dp);
+        int skip = helper(nums, i + 1, end, dp);
 
-        int ans = Math.max(rob, skip);
+        dp[i] = Math.max(rob, skip);
 
-        // Store result
-        dp.put(start, ans);
-
-        return ans;
+        return dp[i];
     }
 }
