@@ -1,37 +1,28 @@
 class Solution {
 
-    HashMap<TreeNode, Integer> dp = new HashMap<>();
-
     public int rob(TreeNode root) {
 
+        int[] ans = solve(root);
+
+        return Math.max(ans[0], ans[1]);
+    }
+
+    public int[] solve(TreeNode root) {
+
         if (root == null) {
-            return 0;
+            return new int[]{0, 0};
         }
 
-        if (dp.containsKey(root)) {
-            return dp.get(root);
-        }
+        int[] left = solve(root.left);
+        int[] right = solve(root.right);
 
         // Rob current node
-        int take = root.val;
+        int take = root.val + left[1] + right[1];
 
-        if (root.left != null) {
-            take += rob(root.left.left);
-            take += rob(root.left.right);
-        }
+        // Don't rob current node
+        int skip = Math.max(left[0], left[1])
+                 + Math.max(right[0], right[1]);
 
-        if (root.right != null) {
-            take += rob(root.right.left);
-            take += rob(root.right.right);
-        }
-
-        // Skip current node
-        int skip = rob(root.left) + rob(root.right);
-
-        int ans = Math.max(take, skip);
-
-        dp.put(root, ans);
-
-        return ans;
+        return new int[]{take, skip};
     }
 }
